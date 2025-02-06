@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Text, TextInput, View } from "react-native";
 
 import { useForm } from "react-hook-form";
 
@@ -8,7 +8,10 @@ import { Button } from "../../components/Button";
 
 import { styles } from "./styles";
 
+import { useNavigation } from "@react-navigation/native";
+
 export function FormStepTwo() {
+  const { navigate } = useNavigation();
   const {
     control,
     handleSubmit,
@@ -18,7 +21,7 @@ export function FormStepTwo() {
   const phoneRef = useRef<TextInput>(null);
 
   function handleNextStep(data: any) {
-    console.log(data);
+    navigate("formStepThree");
   }
 
   const onSubmitEditing = () => {
@@ -36,6 +39,10 @@ export function FormStepTwo() {
           control,
           rules: {
             required: "Data de nascimento é obrigatório",
+            pattern: {
+              value: /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(\d{4})$/,
+              message: "Data de nascimento inválida",
+            },
           },
         }}
         inputProps={{
@@ -53,6 +60,10 @@ export function FormStepTwo() {
           control,
           rules: {
             required: "Telefone é obrigatório",
+            pattern: {
+              value: /^\(?\d{2}\)?\s?\d{5}-?\d{4}$/,
+              message: "Telefone inválido",
+            },
           },
         }}
         inputProps={{
