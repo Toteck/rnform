@@ -13,6 +13,7 @@ export function FormStepThree() {
     control,
     handleSubmit,
     formState: { errors },
+    getValues,
   } = useForm();
 
   const passwordConfirmationRef = useRef<TextInput>(null);
@@ -25,6 +26,12 @@ export function FormStepThree() {
     handleSubmit(handleNextStep)();
   };
 
+  function validationPasswordConfirmation(passwordConfirmation: string) {
+    const { password } = getValues();
+
+    return password === passwordConfirmation || "As senhas devem ser iguais.";
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Escolha sua senha</Text>
@@ -36,6 +43,10 @@ export function FormStepThree() {
           control,
           rules: {
             required: "Senha é obrigatório",
+            minLength: {
+              value: 6,
+              message: "A senha deve ter pelo menos 6 dígitos.",
+            },
           },
         }}
         inputProps={{
@@ -54,6 +65,7 @@ export function FormStepThree() {
           control,
           rules: {
             required: "Confirme a senha.",
+            validate: validationPasswordConfirmation,
           },
         }}
         inputProps={{
