@@ -1,8 +1,7 @@
 import { Text, TextInput, View } from "react-native";
 
 import { useRef } from "react";
-import { useForm } from "react-hook-form";
-import { useAccountForm } from "../../hooks/useAccountForm";
+import { useFormContext } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
 
 import { Input } from "../../components/Input";
@@ -11,22 +10,20 @@ import { Progress } from "../../components/Progress";
 
 import { styles } from "./styles";
 
-import { AccountProps } from "../../contexts/AccountFormContext";
-
 export function FormStepThree() {
   const { navigate } = useNavigation();
-  const { updateFormData } = useAccountForm();
+
   const {
     control,
     handleSubmit,
     formState: { errors },
     getValues,
-  } = useForm<AccountProps>();
+  } = useFormContext<AccountProps>();
 
   const passwordConfirmationRef = useRef<TextInput>(null);
 
   function handleNextStep(data: AccountProps) {
-    updateFormData(data);
+    console.log(data);
     navigate("finish");
   }
 
@@ -80,10 +77,15 @@ export function FormStepThree() {
         inputProps={{
           placeholder: "Confirme a senha.",
           onSubmitEditing: onSubmitEditing,
+          secureTextEntry: true,
         }}
       />
 
-      <Button title="Continuar" onPress={handleSubmit(handleNextStep)} />
+      <Button
+        title="Finalizar"
+        icon="check"
+        onPress={handleSubmit(handleNextStep)}
+      />
     </View>
   );
 }

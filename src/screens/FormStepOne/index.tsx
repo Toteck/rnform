@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { Text, TextInput, View } from "react-native";
 
-import { useForm } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
@@ -9,23 +9,19 @@ import { Progress } from "../../components/Progress";
 
 import { styles } from "./styles";
 import { useNavigation } from "@react-navigation/native";
-import { AccountProps } from "../../contexts/AccountFormContext";
-import { useAccountForm } from "../../hooks/useAccountForm";
 
 export function FormStepOne() {
-  const { updateFormData } = useAccountForm();
   const { navigate } = useNavigation();
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<AccountProps>();
+  } = useFormContext<AccountProps>();
 
   const emailRef = useRef<TextInput>(null);
 
-  function handleNextStep(data: AccountProps) {
-    updateFormData(data);
+  function handleNextStep() {
     navigate("formStepTwo");
   }
 
@@ -74,7 +70,11 @@ export function FormStepOne() {
         }}
       />
 
-      <Button title="Continuar" onPress={handleSubmit(handleNextStep)} />
+      <Button
+        title="Continuar"
+        icon="arrow-right"
+        onPress={handleSubmit(handleNextStep)}
+      />
     </View>
   );
 }

@@ -1,9 +1,8 @@
 import { Text, TextInput, View } from "react-native";
 
 import { useRef } from "react";
-import { useForm } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
-import { useAccountForm } from "../../hooks/useAccountForm";
 
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
@@ -11,21 +10,17 @@ import { Progress } from "../../components/Progress";
 
 import { styles } from "./styles";
 
-import { AccountProps } from "../../contexts/AccountFormContext";
-
 export function FormStepTwo() {
-  const { updateFormData } = useAccountForm();
   const { navigate } = useNavigation();
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<AccountProps>();
+  } = useFormContext<AccountProps>();
 
   const phoneRef = useRef<TextInput>(null);
 
-  function handleNextStep(data: AccountProps) {
-    updateFormData(data);
+  function handleNextStep() {
     navigate("formStepThree");
   }
 
@@ -36,7 +31,7 @@ export function FormStepTwo() {
   return (
     <View style={styles.container}>
       <Progress progress={60} />
-      <Text style={styles.title}>Suas informações</Text>
+      <Text style={styles.title}>Sobre você</Text>
       <Input
         icon="calendar"
         error={errors.birth?.message}
@@ -78,7 +73,11 @@ export function FormStepTwo() {
         }}
       />
 
-      <Button title="Continuar" onPress={handleSubmit(handleNextStep)} />
+      <Button
+        title="Continuar"
+        icon="arrow-right"
+        onPress={handleSubmit(handleNextStep)}
+      />
     </View>
   );
 }
