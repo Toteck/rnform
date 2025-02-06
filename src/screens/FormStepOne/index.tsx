@@ -8,19 +8,23 @@ import { Button } from "../../components/Button";
 
 import { styles } from "./styles";
 import { useNavigation } from "@react-navigation/native";
+import { AccountProps } from "../../contexts/AccountFormContext";
+import { useAccountForm } from "../../hooks/useAccountForm";
 
 export function FormStepOne() {
+  const { updateFormData } = useAccountForm();
   const { navigate } = useNavigation();
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<AccountProps>();
 
   const emailRef = useRef<TextInput>(null);
 
-  function handleNextStep(data: any) {
+  function handleNextStep(data: AccountProps) {
+    updateFormData(data);
     navigate("formStepTwo");
   }
 

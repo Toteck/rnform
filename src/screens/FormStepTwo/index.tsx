@@ -9,18 +9,22 @@ import { Button } from "../../components/Button";
 import { styles } from "./styles";
 
 import { useNavigation } from "@react-navigation/native";
+import { useAccountForm } from "../../hooks/useAccountForm";
+import { AccountProps } from "../../contexts/AccountFormContext";
 
 export function FormStepTwo() {
+  const { updateFormData } = useAccountForm();
   const { navigate } = useNavigation();
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<AccountProps>();
 
   const phoneRef = useRef<TextInput>(null);
 
-  function handleNextStep(data: any) {
+  function handleNextStep(data: AccountProps) {
+    updateFormData(data);
     navigate("formStepThree");
   }
 

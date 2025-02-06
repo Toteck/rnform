@@ -1,25 +1,32 @@
-import { useRef } from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Text, TextInput, View } from "react-native";
 
+import { useRef } from "react";
 import { useForm } from "react-hook-form";
+import { useAccountForm } from "../../hooks/useAccountForm";
+import { useNavigation } from "@react-navigation/native";
 
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
 
 import { styles } from "./styles";
 
+import { AccountProps } from "../../contexts/AccountFormContext";
+
 export function FormStepThree() {
+  const { navigate } = useNavigation();
+  const { updateFormData } = useAccountForm();
   const {
     control,
     handleSubmit,
     formState: { errors },
     getValues,
-  } = useForm();
+  } = useForm<AccountProps>();
 
   const passwordConfirmationRef = useRef<TextInput>(null);
 
-  function handleNextStep(data: any) {
-    console.log(data);
+  function handleNextStep(data: AccountProps) {
+    updateFormData(data);
+    navigate("finish");
   }
 
   const onSubmitEditing = () => {
