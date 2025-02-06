@@ -9,7 +9,11 @@ import { Button } from "../../components/Button";
 import { styles } from "./styles";
 
 export function FormStepOne() {
-  const { control, handleSubmit } = useForm();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const emailRef = useRef<TextInput>(null);
 
@@ -26,7 +30,14 @@ export function FormStepOne() {
       <Text style={styles.title}>Criar sua conta</Text>
       <Input
         icon="user"
-        formProps={{ name: "name", control }}
+        error={errors.name?.message}
+        formProps={{
+          name: "name",
+          control,
+          rules: {
+            required: "Nome é obrigatório",
+          },
+        }}
         inputProps={{
           placeholder: "Nome",
           onSubmitEditing: () => emailRef.current?.focus(),
@@ -36,7 +47,18 @@ export function FormStepOne() {
       <Input
         ref={emailRef}
         icon="mail"
-        formProps={{ name: "email", control }}
+        error={errors.email?.message}
+        formProps={{
+          name: "email",
+          control,
+          rules: {
+            required: "E-mail é obrigatório",
+            pattern: {
+              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i,
+              message: "E-mail inválido",
+            },
+          },
+        }}
         inputProps={{
           placeholder: "E-mail",
           onSubmitEditing: onSubmitEditing,
