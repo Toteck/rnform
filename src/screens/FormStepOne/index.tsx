@@ -7,8 +7,11 @@ import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
 
 import { styles } from "./styles";
+import { useNavigation } from "@react-navigation/native";
 
 export function FormStepOne() {
+  const { navigate } = useNavigation();
+
   const {
     control,
     handleSubmit,
@@ -18,7 +21,7 @@ export function FormStepOne() {
   const emailRef = useRef<TextInput>(null);
 
   function handleNextStep(data: any) {
-    console.log(data);
+    navigate("formStepTwo");
   }
 
   const onSubmitEditing = () => {
