@@ -1,5 +1,5 @@
-import { FormStepOne } from "./src/screens/FormStepOne";
+import { Routes } from "./src/routes";
 
 export default function App() {
-  return <FormStepOne />;
+  return <Routes />;
 }
