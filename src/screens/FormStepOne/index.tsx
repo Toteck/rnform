@@ -1,10 +1,11 @@
 import { useRef } from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Text, TextInput, View } from "react-native";
 
 import { useForm } from "react-hook-form";
 
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
+import { Progress } from "../../components/Progress";
 
 import { styles } from "./styles";
 import { useNavigation } from "@react-navigation/native";
@@ -34,6 +35,7 @@ export function FormStepOne() {
 
   return (
     <View style={styles.container}>
+      <Progress progress={30} />
       <Text style={styles.title}>Criar sua conta</Text>
       <Input
         icon="user"

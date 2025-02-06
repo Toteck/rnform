@@ -1,15 +1,16 @@
-import { useRef } from "react";
 import { Text, TextInput, View } from "react-native";
 
+import { useRef } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigation } from "@react-navigation/native";
+import { useAccountForm } from "../../hooks/useAccountForm";
 
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
+import { Progress } from "../../components/Progress";
 
 import { styles } from "./styles";
 
-import { useNavigation } from "@react-navigation/native";
-import { useAccountForm } from "../../hooks/useAccountForm";
 import { AccountProps } from "../../contexts/AccountFormContext";
 
 export function FormStepTwo() {
@@ -34,6 +35,7 @@ export function FormStepTwo() {
 
   return (
     <View style={styles.container}>
+      <Progress progress={60} />
       <Text style={styles.title}>Suas informações</Text>
       <Input
         icon="calendar"

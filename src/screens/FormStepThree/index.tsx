@@ -7,6 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
+import { Progress } from "../../components/Progress";
 
 import { styles } from "./styles";
 
@@ -41,6 +42,7 @@ export function FormStepThree() {
 
   return (
     <View style={styles.container}>
+      <Progress progress={100} />
       <Text style={styles.title}>Escolha sua senha</Text>
       <Input
         icon="key"
